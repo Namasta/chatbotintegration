@@ -10,6 +10,16 @@ const { WebhookClient } = require('dialogflow-fulfillment');
 const { Card, Suggestion } = require('dialogflow-fulfillment');
 var admin = require("firebase-admin");
 
+const {
+    dialogflow,
+    Image,
+    Table,
+    Carousel,
+  } = require('actions-on-google');
+  var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+  var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
+  var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+
 const app = dialogflow();
 
 process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
