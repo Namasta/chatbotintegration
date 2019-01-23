@@ -58,11 +58,24 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
 //expressApp.post('/fulfillment', app.dialogflowFirebaseFulfillment);
 
-const exapp = express().use(bodyParser.json);
-exapp.post('/fulfillment', app.dialogflowFirebaseFulfillment);
+//const exapp = express().use(bodyParser.json);
+//exapp.post('/fulfillment', app.dialogflowFirebaseFulfillment);
 
 //var listener = app.listen(4000, process.env.IP, function () {
-    var listener = exapp.listen(process.env.PORT, process.env.IP, function () {
-    console.log("server has started");
-    console.log('Listening on port ' + listener.address().port);
-});
+  //  var listener = exapp.listen(process.env.PORT, process.env.IP, function () {
+   // console.log("server has started");
+   // console.log('Listening on port ' + listener.address().port);
+//});
+
+
+const expressApp = express().use(bodyParser.json());
+
+expressApp.post('/fulfillment', app.dialogflowFirebaseFulfillment);
+//expressApp.listen(3000);
+var listener = expressApp.listen(process.env.PORT,
+  process.env.IP,
+  function () {
+    console.log("server started");
+    console.log("listening on port " +
+      listener.address().port);
+  });
