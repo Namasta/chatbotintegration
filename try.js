@@ -13,13 +13,16 @@ const {
     Table,
     Carousel,
   } = require('actions-on-google');
-  
+
   var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
   var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
   var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
 //Create an instance of express server
-var app = express();
+//var app = express();
+const app = dialogflow();
+
+process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
 
 app.get("/",function(req,res){
     res.send('<h1>This is my web app</h1>');
