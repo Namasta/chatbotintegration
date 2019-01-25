@@ -10,6 +10,15 @@ const { WebhookClient } = require('dialogflow-fulfillment');
 const { Card, Suggestion } = require('dialogflow-fulfillment');
 var admin = require("firebase-admin");
 
+var serviceAccount = require("path/to/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://chatbotintegration-2b8d8.firebaseio.com"
+});
+
+const db = admin.firestore();
+
 const {
     dialogflow,
     Image,
