@@ -63,19 +63,6 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
     agent.handleRequest(intentMap);
 });
 
-//const expressApp = express().use(bodyParser.json());
-
-//expressApp.post('/fulfillment', app.dialogflowFirebaseFulfillment);
-
-//const exapp = express().use(bodyParser.json);
-//exapp.post('/fulfillment', app.dialogflowFirebaseFulfillment);
-
-//var listener = app.listen(4000, process.env.IP, function () {
-  //  var listener = exapp.listen(process.env.PORT, process.env.IP, function () {
-   // console.log("server has started");
-   // console.log('Listening on port ' + listener.address().port);
-//});
-
 
 const expressApp = express().use(bodyParser.json());
 
@@ -89,7 +76,7 @@ var listener = expressApp.listen(process.env.PORT, process.env.IP, function () {
   });
 
 
-app.intent('Default Welcome Intent', conv => {
+/*Default Welcome Intent', conv => {
     var today = new Date();
     var dd = today.getDate();
     //conv.ask('Hello, This is MyAgent! How are you?' + dd);
@@ -141,12 +128,12 @@ function getQueries (email,conv) {
         eventRef.get().then(snapshot => {
             var str = "";
             var count = 0;
-            /*if(snapshot.size > 0){
-                str = "You have " + snapshot.size + " events. ";
-            }
-            else{
-                str = "You do not have any appointment";
-            }*/
+            //if(snapshot.size > 0){
+            //    str = "You have " + snapshot.size + " events. ";
+            //}
+            //else{
+            //   str = "You do not have any appointment";
+            //}
             snapshot.forEach(doc => {
                 var dt = new Date(doc.data().date);
                 var time =new Date(doc.data().time);
@@ -166,11 +153,11 @@ function getQueries (email,conv) {
             //conv.add(str);
             resolve(str);
         });
-        /*.catch(err => {
-            console.log('Error getting documents', err);
-            conv.add("Error getting event");
-            reject("test");
-        });*/
+        //.catch(err => {
+        //    console.log('Error getting documents', err);
+        //    conv.add("Error getting event");
+        //    reject("test");
+        //});
     });
 }
 
@@ -343,4 +330,4 @@ function updateParam(email,number,param,date,time,location,duration,conv){
 
 
 
-exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);*/
