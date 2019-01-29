@@ -53,7 +53,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
 
         var visualRecognition = new VisualRecognitionV3({
             version: '2018-03-19',
-            iam_apikey: 'Ae8wfpNwYI-OU88zzvem1L7iH0LzfUxdK1SElGV5VZQa'
+            iam_apikey: '2Svww-vgXV-Tlgv3j86H5bLOez9pu4K8pqjiMDlaXq5Y'
           });
       
           var params = {
