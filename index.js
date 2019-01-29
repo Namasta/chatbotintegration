@@ -74,7 +74,11 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
                 for (i = 0; i < categories.length; i++) {
                     str += categories[i].class + " :";
                     str += categories[i].score + "\n ";
-                    agent.add(new Card({}));
+                    agent.add(new Card({
+                        title: `Image Details`,
+                        text: " ",
+
+                    }));
                 }
                 agent.add(str);
                 //console.log(result);                
@@ -98,6 +102,48 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
         
     }
 
+    function testTone(agent) {
+        agent.add(`I am testtone`);
+        agent.add(`I'm sorry, can you try again?`);
+
+        var toneAnalyzerV3 = new ToneAnalyzerV3({
+            version: '2017-09-21',
+            iam_apikey: 'P2UPaWmPWixPsdR70AKdKZEJY4HRifMvQ07GYGCgn_rf'
+
+            //url:'https://gateway.watsonplatform.net/tone-analyzer/api'
+    });
+
+    var text = agent.parameters.sentence;
+    //'Team, I know that times are tough! Product sales have been disappointing for the past three quarters. We have a competitive product, but we need to do a better job of selling it!'
+
+    var params = {
+      'tone_input': { 'text': text },
+      'content_type': 'application/json'
+    };
+    return new Promise((resolve, reject) => {
+      toneAnalyzerV3.tone(params, function (err, response) {
+        if (err) {
+          console.log(err);
+          agent.add("There is something wrong with the tone input");
+          reject("Error");
+        }
+        else {
+          let result = JSON.stringify(response, null, 2);
+          var str = "";
+          var categories = response.document_tone.tones;
+          categories.sort(function (a, b) { return b.score - a.score });
+          categories.forEach(element => {
+            if (element.score > 0.5)
+              str += element.tone_name + " :" + element.score + " ,";
+          });
+          console.log(result);
+          agent.add("The tone is " + str);
+          resolve("Good");
+        }
+      });
+    });
+  }
+
 
 
     // Run the proper function handler based on the matched Dialogflow intent name
@@ -105,6 +151,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
     intentMap.set('Default Welcome Intent', welcome);
     intentMap.set('Default Fallback Intent', fallback);
     intentMap.set('GetImageDetailIntent', testImage);
+    intentMap.set('ConversationIntent', testTone);
     // intentMap.set('your intent name here', googleAssistantHandler);
     agent.handleRequest(intentMap);
 });
