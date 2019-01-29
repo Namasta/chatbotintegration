@@ -69,8 +69,14 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
               }
               else {
                 let result = JSON.stringify(response, null, 2);
-                var str = "";
+                var i=0; var str = "";
                 var categories = response.images[0].classifiers[0].classes;
+                for (i = 0; i < class_col.length; i++) {
+                    str += class_col[i].class + " :";
+                    str += class_col[i].score + "\n ";
+                }
+                agent.add(str);
+                //console.log(result);                
                 categories.sort(function (a, b) { return b.score - a.score });
                 categories.forEach(element => {
                   if (element.score > 0.8 && element.type_hierarchy != null)
