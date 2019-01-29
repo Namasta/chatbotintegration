@@ -50,6 +50,45 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
     function testImage(agent) {
         agent.add(`I am testimage`);
         agent.add(`I'm sorry, can you try again?`);
+
+        var visualRecognition = new VisualRecognitionV3({
+            version: '2018-03-19',
+            iam_apikey: 'Ae8wfpNwYI-OU88zzvem1L7iH0LzfUxdK1SElGV5VZQa'
+          });
+      
+          var params = {
+            //url: "https://www.t-mobile.com/content/dam/t-mobile/en-p/cell-phones/apple/apple-iphone-x/silver/Apple-iPhoneX-Silver-1-3x.jpg"
+            url: agent.parameters.url
+          };
+          return new Promise((resolve, reject) => {
+            visualRecognition.classify(params, function (err, response) {
+              if (err) {
+                console.log(err);
+                agent.add("There is something wrong with the image link");
+                reject("Error");
+              }
+              else {
+                let result = JSON.stringify(response, null, 2);
+                var str = "";
+                var categories = response.images[0].classifiers[0].classes;
+                categories.sort(function (a, b) { return b.score - a.score });
+                categories.forEach(element => {
+                  if (element.score > 0.8 && element.type_hierarchy != null)
+                    str += element.class + " :" + element.score + "\n";
+                });
+                //agent.add('Image contains: \n' + str);
+                agent.add(new Card({
+                  title: `Image Details`,
+                  imageUrl: params.url,
+                  text: str,
+                })
+                );
+                console.log(result);
+                resolve("Good");
+              }
+            });
+          });
+        
     }
 
 
