@@ -74,6 +74,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
                 for (i = 0; i < categories.length; i++) {
                     str += categories[i].class + " :";
                     str += categories[i].score + "\n ";
+                    agent.add(new Card({}));
                 }
                 agent.add(str);
                 //console.log(result);                
