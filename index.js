@@ -113,7 +113,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
             //url:'https://gateway.watsonplatform.net/tone-analyzer/api'
     });
 
-    var text = agent.parameters.sentence;
+    var text = agent.parameters.myText;
     //'Team, I know that times are tough! Product sales have been disappointing for the past three quarters. We have a competitive product, but we need to do a better job of selling it!'
 
     var params = {
